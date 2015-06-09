@@ -1,5 +1,6 @@
 package com.zorfling.sunshine;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -31,9 +32,18 @@ import java.util.ArrayList;
  */
 public class ForecastFragment extends Fragment {
 
+    private SharedPreferences preferences;
     private ArrayAdapter<String> mForecastAdapter;
 
     public ForecastFragment() {
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        preferences = PreferenceManager
+                .getDefaultSharedPreferences(activity);
     }
 
     @Override
@@ -103,8 +113,6 @@ public class ForecastFragment extends Fragment {
         FetchWeatherTask fetchWeatherTask = new FetchWeatherTask();
         String locationPrefKey = getString(R.string.pref_location_key);
         String defaultLocation = getString(R.string.pref_location_default);
-        SharedPreferences preferences = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
         String locationQuery = preferences.getString(locationPrefKey, defaultLocation);
         fetchWeatherTask.execute(locationQuery);
     }
@@ -230,12 +238,26 @@ public class ForecastFragment extends Fragment {
          * Prepare the weather high/lows for presentation.
          */
         private String formatHighLows(double high, double low) {
+            // Convert to Fahrenheit if required
+            String unitsPrefKey = getString(R.string.pref_units_key);
+            String defaultUnits = getString(R.string.temperature_units_metric);
+            String unitsString = preferences.getString(unitsPrefKey, defaultUnits);
+
+            if (unitsString.equals(getString(R.string.temperature_units_imperial))) {
+                high = convertToFahrenheit(high);
+                low = convertToFahrenheit(low);
+            }
+
             // For presentation, assume the user doesn't care about tenths of a degree.
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
 
             String highLowStr = roundedHigh + "/" + roundedLow;
             return highLowStr;
+        }
+
+        private double convertToFahrenheit(double tempInCelsius) {
+            return tempInCelsius * 9/5 + 32;
         }
 
         /**

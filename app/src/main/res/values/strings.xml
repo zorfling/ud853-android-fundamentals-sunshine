@@ -8,4 +8,10 @@
     <string name="pref_location_label">Location</string>
     <string name="pref_location_key" translatable="false">location</string>
     <string name="pref_location_default" translateable="false">4551, AU</string>
+    <string name="pref_units_label">Temperature Units</string>
+    <string name="pref_units_key" translatable="false">temp_units</string>
+    <string name="temperature_units_metric">M</string>
+    <string name="temperature_units_imperial">I</string>
+    <string name="temperature_units_label_metric">Metric</string>
+    <string name="temperature_units_label_imperial">Imperial</string>
 </resources>
