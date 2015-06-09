@@ -15,4 +15,5 @@
     <string name="temperature_units_label_metric">Metric</string>
     <string name="temperature_units_label_imperial">Imperial</string>
     <string name="action_view_location">View Weather Location</string>
+    <string name="action_share">Share</string>
 </resources>
