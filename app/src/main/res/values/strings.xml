@@ -10,8 +10,8 @@
     <string name="pref_location_default" translateable="false">4551, AU</string>
     <string name="pref_units_label">Temperature Units</string>
     <string name="pref_units_key" translatable="false">temp_units</string>
-    <string name="temperature_units_metric">M</string>
-    <string name="temperature_units_imperial">I</string>
+    <string name="temperature_units_metric">Metric</string>
+    <string name="temperature_units_imperial">Imperial</string>
     <string name="pref_units_metric">Metric</string>
     <string name="pref_units_imperial">Imperial</string>
     <string name="action_view_location">View Weather Location</string>
