@@ -1,6 +1,7 @@
 package com.zorfling.sunshine;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,11 +12,26 @@ import android.view.MenuItem;
 public class DetailActivity extends AppCompatActivity {
 
     private ShareActionProvider mShareActionProvider;
+    private static final String DETAILFRAGMENT_TAG = "DFTAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        if (savedInstanceState == null) {
+            Intent intent = getIntent();
+            Uri dateUri;
+            if (intent == null) {
+                dateUri = null;
+            } else {
+                dateUri = intent.getData();
+            }
+            DetailFragment fragment = DetailFragment.newInstance(dateUri);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.weather_detail_container, fragment, DETAILFRAGMENT_TAG)
+                    .commit();
+        }
     }
 
 

@@ -1,0 +1,125 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        tools:context="com.zorfling.sunshine.DetailFragment"
+        android:orientation="vertical"
+        >
+
+    <TextView
+            android:id="@+id/detail_date_day_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Today"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="24sp"
+            android:textColor="@android:color/black"/>
+
+    <TextView
+            android:id="@+id/detail_date_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="June 18"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="16sp"
+            android:textColor="@color/dark_grey"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:baselineAligned="false"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="top"
+                    android:layout_marginLeft="16dp">
+                <TextView
+                        android:id="@+id/detail_high_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="22"
+                        android:textSize="96sp"
+                        android:fontFamily="sans-serif-light"
+                        android:textColor="@android:color/black"/>
+
+                <TextView
+                        android:id="@+id/detail_low_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="12"
+                        android:fontFamily="sans-serif-light"
+                        android:textSize="48sp"
+                        android:textColor="@color/dark_grey"
+                        android:layout_marginLeft="4dp"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical">
+                <ImageView
+                        android:id="@+id/detail_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:src="@drawable/art_clear"
+                        android:layout_gravity="center"/>
+
+                <TextView
+                        android:id="@+id/detail_forecast_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Clear"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textAppearance="?android:textAppearanceLarge"
+                        android:textColor="@color/dark_grey"
+                        android:layout_gravity="center"
+                        />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    <TextView
+            android:id="@+id/detail_humidity_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Humidity: 71%"
+            android:fontFamily="sans-serif-light"
+            android:textAppearance="?android:textAppearanceLarge"
+            />
+
+    <TextView
+            android:id="@+id/detail_pressure_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Pressure: 1016 hPa"
+            android:fontFamily="sans-serif-light"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:layout_marginTop="4dp"
+            />
+
+    <TextView
+            android:id="@+id/detail_wind_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Wind: 2km/h NW"
+            android:fontFamily="sans-serif-light"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:layout_marginTop="4dp"
+            />
+
+
+</LinearLayout>
+</ScrollView>
