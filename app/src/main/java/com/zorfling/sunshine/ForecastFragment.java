@@ -1,19 +1,20 @@
 package com.zorfling.sunshine;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.zorfling.sunshine.data.WeatherContract;
+import com.zorfling.sunshine.sync.SunshineSyncAdapter;
 /*
 import android.support.v4.content.CursorLoader;
  */
@@ -24,7 +25,7 @@ import android.support.v4.content.CursorLoader;
 public class ForecastFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String FORECAST_SELECTED_POSITION = "position";
-    private SharedPreferences preferences;
+    private static final String TAG = ForecastFragment.class.getSimpleName();
     private ForecastAdapter mForecastAdapter;
 
     private static final int LOADER_ID = 1;
@@ -69,8 +70,6 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        preferences = PreferenceManager
-                .getDefaultSharedPreferences(activity);
     }
 
     @Override
@@ -141,8 +140,13 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_refresh) {
-            updateWeather();
+//        if (id == R.id.action_refresh) {
+//            updateWeather();
+//            return true;
+//        }
+
+        if (id == R.id.action_view_location) {
+            showPreferredLocationOnMap();
             return true;
         }
 
@@ -156,11 +160,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void updateWeather() {
-        FetchWeatherTask fetchWeatherTask = new FetchWeatherTask(getActivity());
-        String locationPrefKey = getString(R.string.pref_location_key);
-        String defaultLocation = getString(R.string.pref_location_default);
-        String locationQuery = preferences.getString(locationPrefKey, defaultLocation);
-        fetchWeatherTask.execute(locationQuery);
+        SunshineSyncAdapter.syncImmediately(getActivity());
     }
 
     @Override
@@ -217,4 +217,23 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
          */
         public void onItemSelected(Uri dateUri);
     }
+
+    private void showPreferredLocationOnMap() {
+        final Cursor cursor = mForecastAdapter.getCursor();
+        if (null != cursor) {
+            cursor.moveToPosition(0);
+            final String latitude = cursor.getString(COL_COORD_LAT);
+            final String longitude = cursor.getString(COL_COORD_LONG);
+            String latLong = latitude + "," + longitude;
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri locationUri = Uri.parse("geo:" + latLong);
+            Log.d(TAG, locationUri.toString());
+            intent.setData(locationUri);
+            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                startActivity(intent);
+            }
+        }
+
+    }
+
 }

@@ -3,11 +3,11 @@ package com.zorfling.sunshine;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.zorfling.sunshine.sync.SunshineSyncAdapter;
 
 public class MainActivity extends AppCompatActivity implements ForecastFragment.Callback {
 
@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
         }
 
         fragment.setUseTodayLayout(!mTwoPane);
+
+        SunshineSyncAdapter.initializeSyncAdapter(this);
 
     }
 
@@ -79,27 +81,8 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
             startActivity(new Intent(this, SettingsActivity.class));
         }
 
-        if (id == R.id.action_view_location) {
-
-            showPreferredLocationOnMap();
-        }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void showPreferredLocationOnMap() {
-        String locationQuery = PreferenceManager
-                .getDefaultSharedPreferences(this)
-                .getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri locationUri = Uri.parse("geo:0,0")
-                .buildUpon()
-                .appendQueryParameter("q", locationQuery)
-                .build();
-        intent.setData(locationUri);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
     }
 
     @Override
